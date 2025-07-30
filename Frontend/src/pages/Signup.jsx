@@ -34,10 +34,10 @@ const Signup = () => {
         setError(null);
 
         const newUser = { username, email, password };
-        const baseURL = import.meta.env.VITE_BASE_URL;
+        const BASE_URL = import.meta.env.VITE_BASE_URL;
 
         try {
-            const response = await axios.post(`${baseURL}/auth/signup`, newUser);
+            const response = await axios.post(`${BASE_URL}/auth/register`, newUser);
 
             if (response.status === 200) {
                 navigate('/login');

@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserDataContext } from "../context/AuthContext.jsx";
 import SearchBar from "./SearchBar.jsx";
 import Profile from "./Profile.jsx";
+import axios from "axios";
 
 const Navbar = () => {
     const { user, setUser } = useContext(UserDataContext);
-    // console.log(user);
-    
+    console.log(user);
+
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
@@ -24,11 +25,29 @@ const Navbar = () => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-    const handleLogout = () => {
-        // Implement your logout logic here
-        localStorage.removeItem('token');
-        setUser(null);
-        navigate('/login');
+    const handleLogout = async (e) => {
+        e.preventDefault()
+        const token = localStorage.getItem('token')
+        const BASE_URL = import.meta.env.VITE_BASE_URL
+        try {
+            const response = await axios.post(`${BASE_URL}/auth/logout`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            console.log(response);            
+            if (response.status === 200) {
+                localStorage.removeItem('token');
+                setUser(null);
+                navigate('/home');
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -49,9 +68,9 @@ const Navbar = () => {
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-6">
                 {navLinks.map((link, i) => (
-                    <Link 
-                        key={i} 
-                        to={link.path} 
+                    <Link
+                        key={i}
+                        to={link.path}
                         className={`text-black hover:text-blue-600 transition-colors `}
                     >
                         {link.name}
@@ -62,23 +81,17 @@ const Navbar = () => {
                 {user && user.username !== "" ? (
                     <>
                         <Profile user={user} onLogout={handleLogout} />
-                        <button 
-                            onClick={handleLogout}
-                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
-                        >
-                            Logout
-                        </button>
                     </>
                 ) : (
                     <>
-                        <Link 
-                            to="/signup" 
+                        <Link
+                            to="/signup"
                             className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                         >
                             Sign Up
                         </Link>
-                        <Link 
-                            to="/login" 
+                        <Link
+                            to="/login"
                             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
                         >
                             Login
@@ -99,8 +112,8 @@ const Navbar = () => {
             {/* Mobile Menu */}
             {isMenuOpen && (
                 <div className="md:hidden fixed inset-0 bg-gray-200 transition-all duration-200 z-50 flex flex-col items-center justify-center space-y-6 pt-16">
-                    <button 
-                        onClick={() => setIsMenuOpen(false)} 
+                    <button
+                        onClick={() => setIsMenuOpen(false)}
                         className="absolute top-4 right-4 text-gray-700"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -108,9 +121,9 @@ const Navbar = () => {
                         </svg>
                     </button>
                     {navLinks.map((link, i) => (
-                        <Link 
-                            key={i} 
-                            to={link.path} 
+                        <Link
+                            key={i}
+                            to={link.path}
                             onClick={() => setIsMenuOpen(false)}
                             className="text-gray-700 text-lg hover:text-blue-600 transition-colors"
                         >
@@ -122,7 +135,7 @@ const Navbar = () => {
                         {user && user.username !== "" ? (
                             <>
                                 <Profile user={user} onLogout={handleLogout} mobile />
-                                <button 
+                                <button
                                     onClick={() => {
                                         handleLogout();
                                         setIsMenuOpen(false);
@@ -134,15 +147,15 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                <Link 
-                                    to="/signup" 
+                                <Link
+                                    to="/signup"
                                     onClick={() => setIsMenuOpen(false)}
                                     className="text-gray-700 text-lg hover:text-blue-600 transition-colors"
                                 >
                                     Sign Up
                                 </Link>
-                                <Link 
-                                    to="/login" 
+                                <Link
+                                    to="/login"
                                     onClick={() => setIsMenuOpen(false)}
                                     className="bg-blue-600 text-white px-4 py-2 rounded-md w-full max-w-xs text-center hover:bg-blue-700 transition-colors"
                                 >

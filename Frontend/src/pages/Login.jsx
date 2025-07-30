@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../utils/helper.js';
+import { UserDataContext } from "../context/AuthContext.jsx";
 import axios from 'axios';
 import HeroImage1 from '../assets/HeroImage1.jpg'
 const Login = () => {
+
+    const { user, setUser } = useContext(UserDataContext);
+    
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -26,12 +30,14 @@ const Login = () => {
         setError(null);
         const user = { email, password };
 
-        const baseURL = import.meta.env.VITE_BASE_URL;
+        const BASE_URL = import.meta.env.VITE_BASE_URL;
         try {
-            const response = await axios.post(`${baseURL}/auth/signin`, user);
+            const response = await axios.post(`${BASE_URL}/auth/login`, user);
             if (response.status === 200) {
                 const data = response.data.data;
+                console.log("data", data);                
                 localStorage.setItem('token', data.token);
+                setUser(data.user)
                 navigate('/home'); // redirect after login
             }
         } catch (error) {

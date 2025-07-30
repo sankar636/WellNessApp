@@ -2,12 +2,11 @@ import React from 'react'
 import { getInitials } from '../utils/helper.js'
 
 const Profile = (props) => {
-
   return (
     <div className="flex items-center gap-3">
             <div className="relative group inline-block">
                 <div className="absolute top-14 left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                    {currentUser?.username}
+                    {props.user?.username}
                 </div>
                 <div className="w-14 h-14 flex items-center justify-center rounded-full text-2xl font-semibold bg-slate-100">
                     {getInitials(props.user?.username)}
