@@ -6,7 +6,7 @@ import Profile from "./Profile.jsx";
 
 const Navbar = () => {
     const { user, setUser } = useContext(UserDataContext);
-    console.log(user);
+    // console.log(user);
     
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +32,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-8 lg:px-16 transition-all duration-200 z-50 ${isScrolled ? "bg-white shadow-md py-3 text-black" : "py-4 md:py-6 text-white"}`}>
+        <nav className={`fixed top-0 left-0 w-full flex text-black items-center justify-between px-4 md:px-8 lg:px-16 py-4 transition-all duration-0 z-50 ${isScrolled ? "bg-white shadow-md" : ""}`}>
             {/* Logo */}
             <Link to='/' className="flex items-center">
                 <h1 className="font-bold text-2xl">
@@ -42,7 +42,7 @@ const Navbar = () => {
             </Link>
 
             {/* Search Bar - Centered */}
-            <div className={`hidden md:flex mx-4 flex-1 max-w-md text-black  ${isScrolled ? "text-black" : "text-white"}`}>
+            <div className={`hidden md:flex mx-4 flex-1 max-w-md text-black}`}>
                 <SearchBar />
             </div>
 
@@ -52,7 +52,7 @@ const Navbar = () => {
                     <Link 
                         key={i} 
                         to={link.path} 
-                        className={`text-black hover:text-blue-600 transition-colors ${isScrolled ? "text-black" : "text-white"}`}
+                        className={`text-black hover:text-blue-600 transition-colors `}
                     >
                         {link.name}
                     </Link>
@@ -62,24 +62,24 @@ const Navbar = () => {
                 {user && user.username !== "" ? (
                     <>
                         <Profile user={user} onLogout={handleLogout} />
-                        {/* <button 
+                        <button 
                             onClick={handleLogout}
                             className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
                         >
                             Logout
-                        </button> */}
+                        </button>
                     </>
                 ) : (
                     <>
                         <Link 
                             to="/signup" 
-                            className={`hover:text-blue-600 transition-colors ${isScrolled ? "text-black" : "text-white"}`}
+                            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                         >
                             Sign Up
                         </Link>
                         <Link 
                             to="/login" 
-                            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
                         >
                             Login
                         </Link>
@@ -119,7 +119,7 @@ const Navbar = () => {
                     ))}
 
                     <div className="flex flex-col items-center space-y-4 w-full px-4">
-                        {user ? (
+                        {user && user.username !== "" ? (
                             <>
                                 <Profile user={user} onLogout={handleLogout} mobile />
                                 <button 

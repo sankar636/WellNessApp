@@ -6,3 +6,9 @@ export const getInitials = (username) => {
     const secondInitial = words[1]?.charAt(0) || "";
     return (firstInitial + secondInitial).toUpperCase()
 } 
+
+export const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    return regex.test(email)
+}
