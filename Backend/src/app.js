@@ -24,4 +24,7 @@ app.use(cookieParser())
 import authRoutes from './routes/auth.route.js'
 app.use('/auth', authRoutes)
 
+import sessionRoutes from './routes/session.route.js'
+app.use('/api', sessionRoutes)
+
 export { app }

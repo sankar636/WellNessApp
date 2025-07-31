@@ -35,7 +35,7 @@ const register = AsyncHandler(async (req, res) => {
     }
 
     return res.status(200).json(
-        new ApiResponse(200, createdUser, "User Sign Successfully")
+        new ApiResponse(200, "User Sign Successfully", createdUser)
     )
 })
 
