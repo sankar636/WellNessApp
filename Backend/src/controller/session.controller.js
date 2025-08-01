@@ -30,7 +30,7 @@ const getUserSessions = AsyncHandler(async (req, res) => {
 
     const drafts = mySessions.filter(s => s.status === 'draft')
     const published = mySessions.filter(s => s.status === 'published')
-    console.log(`mySessions-${mySessions} draft-${drafts} published-${published}`);
+    // console.log(`mySessions-${mySessions} draft-${drafts} published-${published}`);
     
     if (!mySessions) {
         throw new ApiError(400, 'No my session')

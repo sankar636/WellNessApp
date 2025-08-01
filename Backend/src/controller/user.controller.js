@@ -62,7 +62,7 @@ const login = AsyncHandler(async (req, res, next) => {
     
     const token = user.generateToken()
     
-    console.log("Token At signin",token);
+    // console.log("Token At signin",token);
     
     const loggedInUser = await User.findById(user._id).select("-password") 
 
