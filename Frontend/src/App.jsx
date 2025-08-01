@@ -6,6 +6,10 @@ import Home from './pages/Home.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
+import AllSessions from './pages/AllSessions.jsx';
+import MySessions from './pages/MySessions.jsx';
+import AddSession from './pages/AddSession.jsx';
+import SessionDetails from './pages/SessionDetails.jsx';
 
 function App() {
   const location = useLocation();
@@ -19,20 +23,21 @@ function App() {
   return (
     <AuthProvider>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-      
-      {isHome && (
-        <div className='min-h-[58.5vh] pt-20'>
+      {isHome ? (
+        <div className='min-h-[70vh] pt-20'>
           <Routes>
-            {/* User Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/sessions" element={<AllSessions />} />
+            <Route path="/my-sessions" element={<MySessions />} />
+            <Route path="/add-session" element={<AddSession />} />
+            <Route path="/session/:id" element={<SessionDetails />} />
           </Routes>
         </div>
-      )}
-      
+      ) :
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>}
       <Footer />
     </AuthProvider>
   )

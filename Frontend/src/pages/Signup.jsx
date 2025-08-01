@@ -43,7 +43,7 @@ const Signup = () => {
                 navigate('/login');
             }
         } catch (error) {
-            console.error("Signup Error:", error);
+            console.error("Signup Error:", error.message);
             setError("Something went wrong while signing up the user");
         }
     };
@@ -69,7 +69,7 @@ const Signup = () => {
                 </div>
 
                 {/* Right Signup Form */}
-                <div className="w-full md:w-1/2 bg-white rounded-2xl shadow-xl py-16 px-10 border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                <div className="w-full md:w-1/2 bg-white rounded-2xl shadow-xl py-16 md:py-6 lg:py-12 px-10 border border-gray-100 hover:shadow-2xl transition-all duration-300">
                     <form onSubmit={handleSignUp} className="space-y-6">
                         <h4 className="text-3xl font-bold text-center text-gray-800 mb-6">Join Our Wellness Community</h4>
 

@@ -35,14 +35,14 @@ const Login = () => {
             const response = await axios.post(`${BASE_URL}/auth/login`, user);
             if (response.status === 200) {
                 const data = response.data.data;
-                console.log("data", data);                
+                // console.log("data", data);                
                 localStorage.setItem('token', data.token);
                 setUser(data.user)
-                navigate('/home'); // redirect after login
+                navigate('/'); 
             }
         } catch (error) {
-            console.error("Login error:", error);
-            setError("Something went wrong while signing in the user");
+            // console.error("Login error:", error);
+            setError(error.response.statusText);
         }
     };
 
